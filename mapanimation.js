@@ -1,5 +1,5 @@
 // This array contains the coordinates for all bus stops between MIT and Harvard
-/*const busStops = [
+const busStops = [
   [-71.093729, 42.359244],
   [-71.094915, 42.360175],
   [-71.0958, 42.360698],
@@ -12,18 +12,25 @@
   [-71.115476, 42.372085],
   [-71.117585, 42.373016],
   [-71.118625, 42.374863],
-];*/
+];
 
-var busLocations = fetchBusLocations();
-console.log(busLocations);
+fetchBusLocations();
 
 async function fetchBusLocations(){
+    var busLocations;
     const locations = await getBusLocations();
     console.log(new Date());
-    console.log(locations);
-    return locations;
 
-    setTimeout(fetchBusLocations, 1000);
+    for (let i=0; i < locations.length; i++){
+      console.log(locations[i]);
+      location = locations[i].attributes;
+      busLocations[i] = [location.longitude, location.latitude];
+    }
+
+    console.log(busLocations);
+
+    setTimeout(fetchBusLocations, 10000);
+    //return locations;
 }
 
 async function getBusLocations(){

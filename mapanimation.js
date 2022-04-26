@@ -1,5 +1,5 @@
 // This array contains the coordinates for all bus stops between MIT and Harvard
-const busStops = [
+/*const busStops = [
   [-71.093729, 42.359244],
   [-71.094915, 42.360175],
   [-71.0958, 42.360698],
@@ -12,9 +12,27 @@ const busStops = [
   [-71.115476, 42.372085],
   [-71.117585, 42.373016],
   [-71.118625, 42.374863],
-];
+];*/
 
-// TODO: add your own access token
+var busLocations = fetchBusLocations();
+console.log(busLocations);
+
+async function fetchBusLocations(){
+    const locations = await getBusLocations();
+    console.log(new Date());
+    console.log(locations);
+    return locations;
+
+    setTimeout(fetchBusLocations, 1000);
+}
+
+async function getBusLocations(){
+    const url = 'https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip';
+    const response = await fetch(url);
+    const json = await response.json();
+    return json.data;
+}
+
 mapboxgl.accessToken = 'pk.eyJ1Ijoibm1jMTMxMyIsImEiOiJjbDFtb2Q1amYwbWY1M2VyejR2eTNtdWNhIn0.FqrlAbiWjZKsopOXnfsU2Q';
 
 // This is the map instance
@@ -25,7 +43,7 @@ let map = new mapboxgl.Map({
   zoom: 14,
 });
 
-// TODO: add a marker to the map at the first coordinates in the array busStops. The marker variable should be named "marker"
+// add a marker to the map at the first coordinates in the array busStops. The marker variable should be named "marker"
 var marker = new mapboxgl.Marker()
   .setLngLat([-71.093729, 42.359244])
   .addTo(map);
@@ -33,7 +51,7 @@ var marker = new mapboxgl.Marker()
 // counter here represents the index of the current bus stop
 let counter = 0;
 function move() {
-  // TODO: move the marker on the map every 1000ms. Use the function marker.setLngLat() to update the marker coordinates
+  // move the marker on the map every 1000ms. Use the function marker.setLngLat() to update the marker coordinates
   // Use counter to access bus stops in the array busStops
   // Make sure you call move() after you increment the counter.
   setTimeout(()=>{
@@ -42,9 +60,4 @@ function move() {
       counter ++; 
       move();
     }, 1000)
-}
-
-// Do not edit code past this point
-if (typeof module !== 'undefined') {
-  module.exports = { move };
 }

@@ -4,7 +4,7 @@ In week 9 of the MIT xPro course, we focused on asynchronous code. Check out the
 
 How to run: Visit my website, nmc1313.github.io for a direct link to the project! 
 
-Future improvements: Put live updates of where the bus actually is. 
+Future improvements: Add different marker styles for various conditions, such as red for a full bus.
 
 License information:
 
